@@ -1,30 +1,68 @@
-/vendor/
+```
+# Dependency directories
+vendor/
 node_modules/
-npm-debug.log
-yarn-error.log
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+# Build and cache directories
+bootstrap/cache/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/logs/
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
+# Environment specific files
+.env.local
+.env.*
 
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
 
-storage/*.key
-.env
-Homestead.yaml
-Homestead.json
-/.vagrant
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# PHP specific
+*.php~
+**/vendor/**/composer.lock
+
+# Tests
 .phpunit.result.cache
 
-/public/build
-/storage/pail
-.env.backup
-.env.production
-.phpactor.json
-auth.json
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Compression artifacts
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```
