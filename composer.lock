@@ -6112,6 +6112,7 @@
             "time": "2026-03-17T11:56:53+00:00"
         },
         {
+
             "name": "laravel/breeze",
             "version": "v1.29.1",
             "source": {
@@ -6174,6 +6175,7 @@
             "time": "2024-03-04T14:35:21+00:00"
         },
         {
+
             "name": "laravel/pint",
             "version": "v1.20.0",
             "source": {
