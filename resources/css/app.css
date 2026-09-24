@@ -1,3 +1,16 @@
+@import 'vazirmatn/Vazirmatn-font-face.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    /* تور ایمنی: اگه جایی dark: جا مونده بود، تو حالت تاریک خودکار روشن بشه */
+    .dark .text-slate-900 { color: #ffffff; }
+    .dark .text-slate-800 { color: #f1f5f9; }
+    .dark .text-slate-700 { color: #e2e8f0; }
+    .dark .text-slate-600 { color: #cbd5e1; }
+    .dark .bg-white\/70 { background-color: rgb(255 255 255 / 0.06); }
+    .dark .bg-white\/60 { background-color: rgb(255 255 255 / 0.06); }
+    .dark .bg-white\/50 { background-color: rgb(255 255 255 / 0.04); }
+}

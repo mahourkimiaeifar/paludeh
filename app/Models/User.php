@@ -2,53 +2,66 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailNotification;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
-    public function roles(): BelongsToMany{
-        return $this->belongsToMany(Role::class, 'role_user');
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new class extends VerifyEmailNotification {
+            public function toMail($notifiable): MailMessage
+            {
+                $verificationUrl = $this->verificationUrl($notifiable);
+                
+                return (new MailMessage)
+                    ->subject('تایید ایمیل پالوده')
+                    ->view('emails.verify', [
+                        'user' => $notifiable,
+                        'url' => $verificationUrl,
+                    ]);
+            }
+        });
     }
 
-    // متد کمکی برای بررسی داشتن یک نقش خاص
-    public function hasRole(string $role): bool{
-        return $this->roles()->where('name', $role)->exists();
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new class($token) extends ResetPasswordNotification {
+            public function toMail($notifiable): MailMessage
+            {
+                $url = route('password.reset', ['token' => $this->token, 'email' => $notifiable->email]);
+
+                return (new MailMessage)
+                    ->subject('بازیابی رمز عبور پالوده')
+                    ->view('emails.reset', ['url' => $url, 'user' => $notifiable]);
+            }
+        });
     }
 }

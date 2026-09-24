@@ -76,7 +76,7 @@ export default function Layout({ children }) {
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-slate-900 dark:text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   ثبت‌نام
                 </Link>
@@ -127,7 +127,7 @@ export default function Layout({ children }) {
                     <Link
                       href="/register"
                       onClick={() => setIsMenuOpen(false)}
-                      className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg text-center"
+                      className="px-4 py-2 text-sm font-medium text-slate-900 dark:text-white bg-blue-600 rounded-lg text-center"
                     >
                       ثبت‌نام
                     </Link>
