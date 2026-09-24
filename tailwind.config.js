@@ -4,19 +4,20 @@ import forms from '@tailwindcss/forms';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.jsx',
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.jsx',
+        './app/View/**/*.php',
     ],
-
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+            animation: {
+                'pulse-slow': 'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
         },
     },
-
-    plugins: [forms],
-};
+    plugins: [],
+}
