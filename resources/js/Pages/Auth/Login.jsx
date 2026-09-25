@@ -1,5 +1,5 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
@@ -23,6 +23,7 @@ export default function Login() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const hasErrors = Object.keys(errors).length > 0;
+    const status = usePage().props.flash?.status;
 
     const submit = (e) => {
         e.preventDefault();
@@ -38,6 +39,16 @@ export default function Login() {
                 </motion.div>
 
                 <AnimatePresence>
+                    {status && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            role="status"
+                            className="rounded-2xl border border-green-400/25 bg-green-500/10 p-4 text-sm leading-6 text-green-200 backdrop-blur-sm"
+                        >
+                            {status}
+                        </motion.div>
+                    )}
                     {hasErrors && (
                         <motion.div
                             key="error-banner"

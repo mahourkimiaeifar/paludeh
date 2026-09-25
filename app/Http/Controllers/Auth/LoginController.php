@@ -16,9 +16,8 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        // Honeypot check
-        if (! empty($request->input('website_url'))) {
-            // رباته! بدون ارور، فقط برگردون به صفحه
+        // تله‌ی ربات: اگه این فیلد مخفی پر شده بود، یعنی رباته
+        if (!empty($request->input('website_url'))) {
             return redirect()->back();
         }
 
@@ -31,21 +30,14 @@ class LoginController extends Controller
             'password.required' => 'رمز عبور رو هم وارد کن تا در رو باز کنیم 🔑',
         ]);
 
-        // Rate limit check
-        if (RateLimiter::tooManyAttempts('login:'.$request->ip(), 5)) {
-            return back()->withErrors([
-                'email' => 'تعداد تلاش‌هات زیاد شده! یه دقیقه صبر کن و دوباره امتحان کن 💙',
-            ]);
-        }
-
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            RateLimiter::clear('login:'.$request->ip());
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            if (! $user->is_active) {
+            if (!$user->is_active) {
                 Auth::logout();
+
                 return back()->withErrors([
                     'email' => 'حسابت موقتاً غیرفعاله. اگه فکر می‌کنی اشتباهی شده، با پشتیبانی در تماس باش 💙',
                 ]);
@@ -57,8 +49,6 @@ class LoginController extends Controller
 
             return redirect()->intended('/');
         }
-
-        RateLimiter::hit('login:'.$request->ip());
 
         return back()->withErrors([
             'email' => 'این ایمیل و رمز با هم جور در نیومدن. یه بار دیگه با دقت امتحان کن؛ اگه رمزت یادت رفته، گزینه‌ی «فراموشی رمز» همین پایین هست 💙',
