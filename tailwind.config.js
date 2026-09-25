@@ -3,6 +3,7 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'class',
     content: [
         './resources/**/*.blade.php',
         './resources/**/*.js',
@@ -11,13 +12,9 @@ export default {
     ],
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            },
-            animation: {
-                'pulse-slow': 'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            },
+            fontFamily: { sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+            animation: { 'pulse-slow': 'pulse 6s cubic-bezier(0.4,0,0.6,1) infinite' },
         },
     },
     plugins: [],
-}
+};

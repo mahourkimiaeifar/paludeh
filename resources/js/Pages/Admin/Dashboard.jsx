@@ -19,12 +19,12 @@ export default function Dashboard({ stats, recentUsers }) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.08, duration: 0.4 }}
-                        className="rounded-2xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30 hover:bg-white/[0.09]"
+                        className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/[0.06] p-6 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30 hover:bg-white/[0.09]"
                     >
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm text-slate-400">{card.label}</p>
-                                <p className="mt-2 text-3xl font-black text-white">{stats[card.key]}</p>
+                                <p className="text-sm text-slate-600 dark:text-slate-400">{card.label}</p>
+                                <p className="mt-2 text-3xl font-black text-slate-900 dark:text-white">{stats[card.key]}</p>
                             </div>
                             <div className="rounded-xl bg-cyan-500/15 p-3 text-cyan-300">
                                 <Icon name={card.icon} className="h-6 w-6" />
@@ -38,17 +38,17 @@ export default function Dashboard({ stats, recentUsers }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.4 }}
-                className="mt-6 rounded-2xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-xl"
+                className="mt-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/[0.06] p-6 backdrop-blur-xl"
             >
-                <h2 className="mb-4 text-lg font-bold text-white">آخرین کاربران</h2>
+                <h2 className="mb-4 text-lg font-bold text-slate-900 dark:text-white">آخرین کاربران</h2>
                 <div className="space-y-3">
                     {recentUsers.map((u) => (
                         <div key={u.email} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3">
                             <div>
-                                <p className="text-sm font-bold text-white">{u.name}</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white">{u.name}</p>
                                 <p className="text-xs text-slate-500" dir="ltr">{u.email}</p>
                             </div>
-                            <span className="text-xs text-slate-400">{u.created_at}</span>
+                            <span className="text-xs text-slate-600 dark:text-slate-400">{u.created_at}</span>
                         </div>
                     ))}
                 </div>

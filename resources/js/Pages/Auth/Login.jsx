@@ -9,9 +9,9 @@ const stagger = {
 };
 
 const inputClass = (hasError) =>
-    `w-full rounded-xl border px-4 py-3 text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${hasError
+    `w-full rounded-xl border px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${hasError
         ? 'border-rose-300/40 bg-rose-400/10 focus:border-rose-300/60 focus:ring-rose-300/20'
-        : 'border-white/10 bg-white/5 focus:border-cyan-400/60 focus:bg-white/10 focus:ring-cyan-400/25'
+        : 'border-slate-200 dark:border-white/10 bg-white/5 focus:border-cyan-400/60 focus:bg-white/10 focus:ring-cyan-400/25'
     }`;
 
 export default function Login() {
@@ -34,8 +34,8 @@ export default function Login() {
         <GuestLayout>
             <div className="space-y-6">
                 <motion.div custom={0} variants={stagger} initial="hidden" animate="show" className="text-center">
-                    <h1 className="text-2xl font-extrabold text-white">ورود به حساب</h1>
-                    <p className="mt-2 text-sm text-slate-400">خوش برگشتی! لطفاً وارد شو</p>
+                    <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">ورود به حساب</h1>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">خوش برگشتی! لطفاً وارد شو</p>
                 </motion.div>
 
                 <AnimatePresence>
@@ -70,7 +70,7 @@ export default function Login() {
 
                 <form onSubmit={submit} className="space-y-4" noValidate>
                     <motion.div custom={1} variants={stagger} initial="hidden" animate="show">
-                        <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-300">ایمیل</label>
+                        <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">ایمیل</label>
                         <input
                             id="email"
                             type="email"
@@ -99,7 +99,7 @@ export default function Login() {
                         aria-hidden="true"
                     />
                     <motion.div custom={2} variants={stagger} initial="hidden" animate="show">
-                        <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-300">رمز عبور</label>
+                        <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">رمز عبور</label>
                         <div className="relative">
                             <input
                                 id="password"
@@ -116,7 +116,7 @@ export default function Login() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword((v) => !v)}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-cyan-300"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 transition-colors hover:text-cyan-300"
                                 aria-label={showPassword ? 'پنهان کردن رمز عبور' : 'نمایش رمز عبور'}
                             >
                                 {showPassword ? (
@@ -132,7 +132,7 @@ export default function Login() {
                     </motion.div>
 
                     <motion.div custom={3} variants={stagger} initial="hidden" animate="show" className="flex items-center justify-between">
-                        <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
+                        <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                             <input type="checkbox" checked={data.remember} onChange={(e) => setData('remember', e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-white/10 accent-cyan-400" />
                             مرا به خاطر بسپار
                         </label>
@@ -143,7 +143,7 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={processing}
-                            className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-400/40 hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+                            className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-bold text-slate-900 dark:text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-400/40 hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
                         >
                             <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
                             {processing ? 'در حال ورود...' : 'ورود'}
@@ -151,9 +151,8 @@ export default function Login() {
                     </motion.div>
                 </form>
 
-                <motion.p custom={5} variants={stagger} initial="hidden" animate="show" className="text-center text-sm text-slate-400">
-                    حساب نداری؟{' '}
-                    <Link href="/register" className="font-medium text-cyan-300 transition-colors hover:text-cyan-200">ثبت‌نام کن</Link>
+                <motion.p custom={5} variants={stagger} initial="hidden" animate="show" className="text-center text-sm text-slate-600 dark:text-slate-400 dark:text-slate-600 dark:text-slate-400">
+                    دسترسی به پالوده فقط با دعوت مدیر ساخته میشه 💙
                 </motion.p>
             </div>
         </GuestLayout>

@@ -24,7 +24,7 @@ export default function GuestLayout({ children }) {
                     </Link>
                 </div>
 
-                <div className="relative rounded-3xl border border-white/10 bg-white/[0.06] p-8 shadow-2xl shadow-blue-950/60 backdrop-blur-2xl">
+                <div className="relative rounded-3xl border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/[0.06] p-8 shadow-2xl shadow-blue-950/60 backdrop-blur-2xl">
                     <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" aria-hidden="true" />
                     {children}
                 </div>
