@@ -1,12 +1,16 @@
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import ThreeBackground from '@/Components/ThreeBackground';
+import { lazy, Suspense } from 'react';
+import Logo from '@/Components/Logo';
+
+
+const ThreeBackground = lazy(() => import('@/Components/ThreeBackground'));
 
 export default function GuestLayout({ children }) {
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 p-4">
             <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950" aria-hidden="true" />
-            <ThreeBackground />
+            <Suspense fallback={null}><ThreeBackground /></Suspense>
             <div className="fixed -right-32 -top-32 -z-10 h-96 w-96 animate-pulse-slow rounded-full bg-cyan-500/15 blur-3xl" aria-hidden="true" />
             <div className="fixed -bottom-32 -left-32 -z-10 h-96 w-96 animate-pulse-slow rounded-full bg-blue-600/15 blur-3xl" aria-hidden="true" />
 
@@ -16,6 +20,7 @@ export default function GuestLayout({ children }) {
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 className="relative w-full max-w-md"
             >
+                <Logo className="mx-auto mb-4 h-16 w-16" />
                 <div className="mb-8 text-center">
                     <Link href="/" className="inline-block">
                         <span className="bg-gradient-to-l from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-4xl font-black tracking-tight text-transparent drop-shadow-[0_0_25px_rgba(56,189,248,0.35)]">

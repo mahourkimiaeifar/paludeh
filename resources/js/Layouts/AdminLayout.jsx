@@ -1,8 +1,12 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import ThreeBackground from '@/Components/ThreeBackground';
+import { lazy, Suspense } from 'react';
 import ThemeToggle from '@/Components/ThemeToggle';
 import Clock from '@/Components/Clock';
+import Logo from '@/Components/Logo';
+
+
+const ThreeBackground = lazy(() => import('@/Components/ThreeBackground'));
 
 const paths = {
     dashboard: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z',
@@ -43,14 +47,16 @@ export default function AdminLayout({ title, children }) {
     return (
         <div className="relative min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-900 dark:text-white">
             <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-100 via-blue-50 to-cyan-100 dark:from-slate-950 dark:via-blue-950 dark:to-cyan-950" aria-hidden="true" />
-            <div className="hidden dark:block"><ThreeBackground density={0.5} /></div>
+            <div className="hidden dark:block"><Suspense fallback={null}><ThreeBackground density={0.5} /></Suspense></div>
 
             {open && <div className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} aria-hidden="true" />}
 
             <aside className={`fixed inset-y-0 right-0 z-40 flex w-72 transform flex-col border-l border-slate-200 bg-white/85 backdrop-blur-2xl transition-transform duration-300 dark:border-slate-200 dark:border-white/10 dark:bg-slate-950/85 ${open ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0`}>
                 <div className="flex items-center justify-between p-6">
-                    <Link href="/admin" className="bg-gradient-to-l from-cyan-600 to-blue-700 bg-clip-text text-2xl font-black text-transparent dark:from-cyan-300 dark:to-blue-500">پالوده</Link>
-                    <button className="text-slate-500 hover:text-slate-900 dark:text-slate-600 dark:text-slate-400 dark:hover:text-slate-900 dark:text-white md:hidden" onClick={() => setOpen(false)} aria-label="بستن منو">
+                    <Link href="/admin" className="flex items-center gap-3">
+                        <Logo className="h-9 w-9" />
+                        <span className="bg-gradient-to-l from-cyan-600 to-blue-700 bg-clip-text text-xl font-black text-transparent dark:from-cyan-300 dark:to-blue-500">پالوده</span>
+                    </Link>                    <button className="text-slate-500 hover:text-slate-900 dark:text-slate-600 dark:text-slate-400 dark:hover:text-slate-900 dark:text-white md:hidden" onClick={() => setOpen(false)} aria-label="بستن منو">
                         <Icon name="close" className="h-6 w-6" />
                     </button>
                 </div>
@@ -61,11 +67,10 @@ export default function AdminLayout({ title, children }) {
                             key={item.href}
                             href={item.href}
                             onClick={() => setOpen(false)}
-                            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-200 ${
-                                isActive(item.href)
+                            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-200 ${isActive(item.href)
                                     ? 'bg-cyan-100 font-bold text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300'
                                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-600 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-900 dark:text-white'
-                            }`}
+                                }`}
                         >
                             <Icon name={item.icon} />
                             {item.label}

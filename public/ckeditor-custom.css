@@ -1,0 +1,58 @@
+/* CKEditor Custom Styles - Dark/Light Mode Support */
+.ck-editor__editable {
+    min-height: 400px !important;
+    font-family: 'Vazirmatn', sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+    padding: 20px !important;
+}
+
+/* Light Mode */
+.ck-editor__editable {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+/* Dark Mode */
+.dark .ck-editor__editable {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+/* Toolbar */
+.ck-toolbar {
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.dark .ck-toolbar {
+    background: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .ck-toolbar__items .ck-button {
+    color: #cbd5e1 !important;
+}
+
+.dark .ck-toolbar__items .ck-button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dropdown */
+.dark .ck-dropdown__panel {
+    background: #1e293b !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .ck-dropdown__panel .ck-list__item {
+    color: #f1f5f9 !important;
+}
+
+.dark .ck-dropdown__panel .ck-list__item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Focus */
+.ck-editor__editable:focus {
+    border-color: #06b6d4 !important;
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+}

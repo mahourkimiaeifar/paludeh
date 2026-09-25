@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title inertia>پالوده</title>
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
     <script>
         (function () {
             if ((localStorage.getItem('theme') || 'dark') === 'dark') {
@@ -14,6 +16,7 @@
     </script>
     @viteReactRefresh
     @vite(['resources/js/app.jsx', 'resources/css/app.css'])
+    <link rel="stylesheet" href="/ckeditor-custom.css">
     @inertiaHead
 </head>
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,8 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'store']);
+Route::get('/login', [LoginController::class, 'create'])->middleware('guest')->name('login');
+Route::post('/login', [LoginController::class, 'store'])->middleware('guest');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::middleware('auth')->group(function () {
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/pages', fn () => Inertia::render('Admin/Placeholder', ['title' => 'مدیریت صفحات']))->name('admin.pages');
     Route::get('/admin/assets', fn () => Inertia::render('Admin/Placeholder', ['title' => 'دارایی‌های سه‌بعدی']))->name('admin.assets');
     Route::get('/admin/settings', fn () => Inertia::render('Admin/Placeholder', ['title' => 'تنظیمات سراسری']))->name('admin.settings');
+    
+    Route::get('/admin/articles', [ArticleController::class, 'index'])->name('admin.articles');
+    Route::get('/admin/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
+    Route::post('/admin/articles', [ArticleController::class, 'store'])->name('admin.articles.store');
+    Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
+    Route::put('/admin/articles/{article}', [ArticleController::class, 'update'])->name('admin.articles.update');
+    Route::delete('/admin/articles/{article}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
 });
 
 // Verification routes
@@ -48,8 +56,8 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'لینک تایید دوباره ارسال شد! 💙');
 })->middleware('auth')->name('verification.send');
 
-Route::get('/forgot-password', [PasswordResetController::class, 'create'])->name('password.request');
-Route::post('/forgot-password', [PasswordResetController::class, 'store'])->name('password.email');
+Route::get('/forgot-password', [PasswordResetController::class, 'create'])->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'store'])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
 Route::get('/forgot-password/sent', [PasswordResetController::class, 'sent'])->name('password.sent');
