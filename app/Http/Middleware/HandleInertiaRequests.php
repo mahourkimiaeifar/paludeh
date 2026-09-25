@@ -21,6 +21,13 @@ class HandleInertiaRequests extends Middleware
                 'status' => fn () => $request->session()->get('status'),
                 'sent_email' => fn () => $request->session()->get('sent_email'),
             ],
+            'auth' => fn () => [
+                'user' => $request->user() ? [
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'roles' => $request->user()->getRoleNames(),
+                ] : null,
+            ],
         ]);
     }
 }

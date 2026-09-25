@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
@@ -9,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +26,14 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
-Route::middleware('auth')->get('/admin', function () {
-    return Inertia::render('Admin/Dashboard', [
-        'user' => auth()->user()->only(['name', 'email']),
-        'roles' => auth()->user()->getRoleNames(),
-    ]);
-})->name('admin.dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', fn () => Inertia::render('Admin/Placeholder', ['title' => 'مدیریت کاربران']))->name('admin.users');
+    Route::get('/admin/articles', fn () => Inertia::render('Admin/Placeholder', ['title' => 'مدیریت مقالات']))->name('admin.articles');
+    Route::get('/admin/pages', fn () => Inertia::render('Admin/Placeholder', ['title' => 'مدیریت صفحات']))->name('admin.pages');
+    Route::get('/admin/assets', fn () => Inertia::render('Admin/Placeholder', ['title' => 'دارایی‌های سه‌بعدی']))->name('admin.assets');
+    Route::get('/admin/settings', fn () => Inertia::render('Admin/Placeholder', ['title' => 'تنظیمات سراسری']))->name('admin.settings');
+});
 
 // Verification routes
 Route::get('/email/verify', function () {
