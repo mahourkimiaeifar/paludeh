@@ -20,7 +20,7 @@ class DashboardController extends Controller
             'recentUsers' => User::latest()->take(5)->get()->map(fn ($u) => [
                 'name' => $u->name,
                 'email' => $u->email,
-                'created_at' => $u->created_at->diffForHumans(),
+                'created_at' => \Morilog\Jalali\Jalalian::fromCarbon($u->created_at)->ago(),
             ]),
         ]);
     }

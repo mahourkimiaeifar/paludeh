@@ -8,7 +8,7 @@ const ThreeBackground = lazy(() => import('@/Components/ThreeBackground'));
 
 export default function GuestLayout({ children }) {
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 p-4">
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
             <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950" aria-hidden="true" />
             <Suspense fallback={null}><ThreeBackground /></Suspense>
             <div className="fixed -right-32 -top-32 -z-10 h-96 w-96 animate-pulse-slow rounded-full bg-cyan-500/15 blur-3xl" aria-hidden="true" />

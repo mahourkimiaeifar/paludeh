@@ -27,7 +27,7 @@ export default function Login() {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/login');
+        post(window.location.pathname);
     };
 
     return (

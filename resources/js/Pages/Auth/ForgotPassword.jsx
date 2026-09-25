@@ -8,7 +8,7 @@ export default function ForgotPassword() {
 
     const submit = (e) => {
         e.preventDefault();
-        post('/forgot-password');
+        post(window.location.pathname);
     };
 
     return (
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
                     <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">رمزت یادت رفته؟</h1>
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">اشکالی نداره، برای همه پیش میاد! ایمیلت رو بنویس تا لینک بازیابی بفرستیم 💙</p>
                 </motion.div>
-                
+
                 <AnimatePresence>
                     {status && (
                         <motion.div
@@ -44,11 +44,10 @@ export default function ForgotPassword() {
                             placeholder="you@example.com"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
-                            className={`w-full rounded-xl border px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${
-                                errors.email
+                            className={`w-full rounded-xl border px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${errors.email
                                     ? 'border-rose-300/40 bg-rose-400/10 focus:border-rose-300/60 focus:ring-rose-300/20'
                                     : 'border-slate-200 dark:border-white/10 bg-white/5 focus:border-cyan-400/60 focus:bg-white/10 focus:ring-cyan-400/25'
-                            }`}
+                                }`}
                             aria-invalid={!!errors.email}
                         />
                         {errors.email && <p className="mt-1.5 text-xs leading-5 text-rose-200/90">{errors.email}</p>}

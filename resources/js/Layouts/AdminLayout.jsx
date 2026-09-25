@@ -45,9 +45,9 @@ export default function AdminLayout({ title, children }) {
     const isActive = (href) => (href === '/admin' ? url === '/admin' : url.startsWith(href));
 
     return (
-        <div className="relative min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-900 dark:text-white">
+        <div className="relative min-h-screen text-slate-900 dark:text-white">
             <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-100 via-blue-50 to-cyan-100 dark:from-slate-950 dark:via-blue-950 dark:to-cyan-950" aria-hidden="true" />
-            <div className="hidden dark:block"><Suspense fallback={null}><ThreeBackground density={0.5} /></Suspense></div>
+            <Suspense fallback={null}><ThreeBackground density={0.5} /></Suspense>
 
             {open && <div className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} aria-hidden="true" />}
 
@@ -68,8 +68,8 @@ export default function AdminLayout({ title, children }) {
                             href={item.href}
                             onClick={() => setOpen(false)}
                             className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-200 ${isActive(item.href)
-                                    ? 'bg-cyan-100 font-bold text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300'
-                                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-600 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-900 dark:text-white'
+                                ? 'bg-cyan-100 font-bold text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-600 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-900 dark:text-white'
                                 }`}
                         >
                             <Icon name={item.icon} />
@@ -99,6 +99,16 @@ export default function AdminLayout({ title, children }) {
                         <h1 className="text-lg font-extrabold">{title}</h1>
                     </div>
                     <div className="flex items-center gap-4">
+                        <Link
+                            href="/"
+                            target="_blank"
+                            className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white/60 px-4 py-2 text-sm font-medium text-slate-600 transition-all hover:border-cyan-500/40 hover:text-cyan-600 sm:flex dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300"
+                        >
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                            مشاهده سایت
+                        </Link>
                         <Clock />
                         <ThemeToggle />
                         {auth?.user?.roles?.map((role) => (

@@ -4,10 +4,9 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 const inputClass = (hasError) =>
-    `w-full rounded-xl border px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${
-        hasError
-            ? 'border-rose-300/40 bg-rose-400/10 focus:border-rose-300/60 focus:ring-rose-300/20'
-            : 'border-slate-200 dark:border-white/10 bg-white/5 focus:border-cyan-400/60 focus:bg-white/10 focus:ring-cyan-400/25'
+    `w-full rounded-xl border px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 ${hasError
+        ? 'border-rose-300/40 bg-rose-400/10 focus:border-rose-300/60 focus:ring-rose-300/20'
+        : 'border-slate-200 dark:border-white/10 bg-white/5 focus:border-cyan-400/60 focus:bg-white/10 focus:ring-cyan-400/25'
     }`;
 
 export default function ResetPassword({ token, email }) {

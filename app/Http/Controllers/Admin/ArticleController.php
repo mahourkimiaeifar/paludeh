@@ -7,6 +7,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Morilog\Jalali\Jalalian;
 
 class ArticleController extends Controller
 {
@@ -21,9 +22,12 @@ class ArticleController extends Controller
                     'title' => $a->title,
                     'slug' => $a->slug,
                     'status' => $a->status,
+                    'featured_image' => $a->featured_image ? asset('storage/' . $a->featured_image) : null,
                     'author' => $a->author->name,
-                    'published_at' => $a->published_at?->format('Y-m-d H:i'),
-                    'created_at' => $a->created_at->diffForHumans(),
+                    'published_at' => $a->published_at 
+                        ? Jalalian::fromCarbon($a->published_at)->format('Y/m/d')
+                        : null,
+                    'created_at' => Jalalian::fromCarbon($a->created_at)->format('Y/m/d'),
                 ]),
         ]);
     }
@@ -65,7 +69,7 @@ class ArticleController extends Controller
             'published_at' => $validated['status'] === 'published' ? now() : $validated['published_at'],
         ]);
 
-        return redirect()->route('admin.articles')->with('success', 'مقاله با موفقیت ساخته شد!');
+        return redirect()->route('admin.articles.index')->with('success', 'مقاله با موفقیت ساخته شد!');
     }
 
     public function edit(Article $article)
@@ -77,11 +81,11 @@ class ArticleController extends Controller
                 'slug' => $article->slug,
                 'excerpt' => $article->excerpt,
                 'content' => $article->content,
-                'featured_image' => $article->featured_image ? Storage::url($article->featured_image) : null,
+                'featured_image' => $article->featured_image ? asset('storage/' . $article->featured_image) : null,
                 'status' => $article->status,
                 'meta_title' => $article->meta_title,
                 'meta_description' => $article->meta_description,
-                'published_at' => $article->published_at?->format('Y-m-d\TH:i'),
+                'published_at' => $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : null,
             ],
         ]);
     }
@@ -121,7 +125,7 @@ class ArticleController extends Controller
             'published_at' => $validated['status'] === 'published' && !$article->published_at ? now() : $validated['published_at'],
         ]);
 
-        return redirect()->route('admin.articles')->with('success', 'مقاله ویرایش شد!');
+        return redirect()->route('admin.articles.index')->with('success', 'مقاله ویرایش شد!');
     }
 
     public function destroy(Article $article)
@@ -130,6 +134,6 @@ class ArticleController extends Controller
             Storage::disk('public')->delete($article->featured_image);
         }
         $article->delete();
-        return redirect()->route('admin.articles')->with('success', 'مقاله حذف شد!');
+        return redirect()->route('admin.articles.index')->with('success', 'مقاله حذف شد!');
     }
 }

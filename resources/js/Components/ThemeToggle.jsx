@@ -8,6 +8,7 @@ export default function ThemeToggle() {
         const isDark = saved ? saved === 'dark' : true;
         setDark(isDark);
         document.documentElement.classList.toggle('dark', isDark);
+        window.dispatchEvent(new CustomEvent('themechange', { detail: isDark ? 'dark' : 'light' }));
     }, []);
 
     const toggle = () => {
@@ -15,12 +16,13 @@ export default function ThemeToggle() {
         setDark(next);
         localStorage.setItem('theme', next ? 'dark' : 'light');
         document.documentElement.classList.toggle('dark', next);
+        window.dispatchEvent(new CustomEvent('themechange', { detail: next ? 'dark' : 'light' }));
     };
 
     return (
         <button
             onClick={toggle}
-            className="rounded-xl border border-slate-200 bg-white/60 p-2.5 text-slate-500 transition-all hover:border-cyan-500/40 hover:text-cyan-600 dark:border-slate-200 dark:border-white/10 dark:bg-white/5 dark:text-slate-600 dark:text-slate-400 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300"
+            className="rounded-xl border border-slate-200 bg-white/60 p-2.5 text-slate-500 transition-all hover:border-cyan-500/40 hover:text-cyan-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300"
             aria-label={dark ? 'فعال‌سازی حالت روشن' : 'فعال‌سازی حالت تاریک'}
         >
             {dark ? (
