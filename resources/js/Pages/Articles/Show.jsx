@@ -2,8 +2,9 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import { Link, Head } from '@inertiajs/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect, useMemo } from 'react';
+import Comments from '@/Components/Comments';
 
-export default function Show({ article }) {
+export default function Show({ article, comments, allowComments }) {
     const articleRef = useRef(null);
     const figureRef = useRef(null);
     const [progress, setProgress] = useState(0);
@@ -74,7 +75,7 @@ export default function Show({ article }) {
             await navigator.clipboard.writeText(window.location.href);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
-        } catch {}
+        } catch { }
     };
 
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -110,11 +111,10 @@ export default function Show({ article }) {
                                         <a
                                             key={h.id}
                                             href={`#${h.id}`}
-                                            className={`block rounded-lg px-3 py-2 text-sm transition-all ${h.level === 'h3' ? 'pr-6' : ''} ${
-                                                activeHeading === h.id
-                                                    ? 'bg-cyan-500/10 font-bold text-cyan-700 dark:text-cyan-300'
-                                                    : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5'
-                                            }`}
+                                            className={`block rounded-lg px-3 py-2 text-sm transition-all ${h.level === 'h3' ? 'pr-6' : ''} ${activeHeading === h.id
+                                                ? 'bg-cyan-500/10 font-bold text-cyan-700 dark:text-cyan-300'
+                                                : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5'
+                                                }`}
                                         >
                                             {h.text}
                                         </a>
@@ -244,11 +244,10 @@ export default function Show({ article }) {
                                 <span className="text-sm font-medium text-slate-500 dark:text-slate-400">اشتراک‌گذاری:</span>
                                 <button
                                     onClick={copyLink}
-                                    className={`flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
-                                        copied
-                                            ? 'border-green-400/50 bg-green-500/10 text-green-600 dark:text-green-300'
-                                            : 'border-slate-200 bg-white/60 text-slate-600 hover:border-cyan-500/40 hover:text-cyan-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300'
-                                    }`}
+                                    className={`flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${copied
+                                        ? 'border-green-400/50 bg-green-500/10 text-green-600 dark:text-green-300'
+                                        : 'border-slate-200 bg-white/60 text-slate-600 hover:border-cyan-500/40 hover:text-cyan-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-cyan-400/40 dark:hover:text-cyan-300'
+                                        }`}
                                 >
                                     {copied ? (
                                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
@@ -319,6 +318,31 @@ export default function Show({ article }) {
                                 </div>
                             </div>
                         </motion.div>
+                        {/* Comments Section */}
+                        <motion.section
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="mx-auto mt-16 max-w-3xl"
+                        >
+                            <div className="mb-8 flex items-center gap-4">
+                                <div className="h-px flex-1 bg-gradient-to-l from-slate-200 to-transparent dark:from-white/10" />
+                                <h2 className="flex items-center gap-2 text-2xl font-black text-slate-900 dark:text-white">
+                                    <svg className="h-6 w-6 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                    </svg>
+                                    نظرات
+                                </h2>
+                                <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent dark:from-white/10" />
+                            </div>
+
+                            <Comments
+                                articleId={safeArticle.id}
+                                comments={comments || []}
+                                allowComments={allowComments ?? true}
+                            />
+                            {console.log('🔍 Article ID:', safeArticle.id)}
+                        </motion.section>
                     </article>
                 </div>
             </div>

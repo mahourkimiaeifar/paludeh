@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="admin-path" content="{{ env('ADMIN_LOGIN_PATH', 'login') }}">
+    <meta name="admin-path" content="{{ env('ADMIN_LOGIN_PATH', 'login') }}">
     <title inertia>پالوده</title>
     <link rel="icon" type="image/png" href="/logo.png">
     <link rel="apple-touch-icon" href="/logo.png">

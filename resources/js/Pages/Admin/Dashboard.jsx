@@ -1,5 +1,5 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Icon } from '@/Layouts/AdminLayout';
+import Icon from '@/Components/Icon';
 import { motion } from 'framer-motion';
 
 const cards = [

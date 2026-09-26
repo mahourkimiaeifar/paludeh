@@ -35,7 +35,7 @@ class Article extends Model
         static::creating(function ($article) {
             if (empty($article->slug)) {
                 $article->slug = Str::slug($article->title);
-                
+
                 // اگه slug تکراری بود، یه عدد بهش اضافه کن
                 $originalSlug = $article->slug;
                 $count = 1;
@@ -49,5 +49,10 @@ class Article extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

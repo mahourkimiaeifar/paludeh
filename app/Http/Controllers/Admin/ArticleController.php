@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Concerns\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -11,20 +12,22 @@ use Morilog\Jalali\Jalalian;
 
 class ArticleController extends Controller
 {
+    use LogsActivity;
+
     public function index()
     {
         return Inertia::render('Admin/Articles/Index', [
             'articles' => Article::with('author')
                 ->latest()
                 ->get()
-                ->map(fn ($a) => [
+                ->map(fn($a) => [
                     'id' => $a->id,
                     'title' => $a->title,
                     'slug' => $a->slug,
                     'status' => $a->status,
                     'featured_image' => $a->featured_image ? asset('storage/' . $a->featured_image) : null,
                     'author' => $a->author->name,
-                    'published_at' => $a->published_at 
+                    'published_at' => $a->published_at
                         ? Jalalian::fromCarbon($a->published_at)->format('Y/m/d')
                         : null,
                     'created_at' => Jalalian::fromCarbon($a->created_at)->format('Y/m/d'),
@@ -56,7 +59,7 @@ class ArticleController extends Controller
             $imagePath = $request->file('featured_image')->store('articles', 'public');
         }
 
-        Article::create([
+        $article = Article::create([
             'user_id' => auth()->id(),
             'title' => $validated['title'],
             'slug' => $validated['slug'],
@@ -68,6 +71,8 @@ class ArticleController extends Controller
             'meta_description' => $validated['meta_description'],
             'published_at' => $validated['status'] === 'published' ? now() : $validated['published_at'],
         ]);
+
+        $this->logActivity('create', "مقاله «{$article->title}» ساخته شد", Article::class, $article->id);
 
         return redirect()->route('admin.articles.index')->with('success', 'مقاله با موفقیت ساخته شد!');
     }
@@ -92,6 +97,8 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
+        $oldValues = $article->only(['title', 'status']);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|unique:articles,slug,' . $article->id,
@@ -104,13 +111,12 @@ class ArticleController extends Controller
             'published_at' => 'nullable|date',
         ]);
 
+        $imagePath = $article->featured_image;
         if ($request->hasFile('featured_image')) {
             if ($article->featured_image) {
                 Storage::disk('public')->delete($article->featured_image);
             }
             $imagePath = $request->file('featured_image')->store('articles', 'public');
-        } else {
-            $imagePath = $article->featured_image;
         }
 
         $article->update([
@@ -125,6 +131,8 @@ class ArticleController extends Controller
             'published_at' => $validated['status'] === 'published' && !$article->published_at ? now() : $validated['published_at'],
         ]);
 
+        $this->logActivity('update', "مقاله «{$article->title}» ویرایش شد", Article::class, $article->id, $oldValues, $article->only(['title', 'status']));
+
         return redirect()->route('admin.articles.index')->with('success', 'مقاله ویرایش شد!');
     }
 
@@ -133,7 +141,11 @@ class ArticleController extends Controller
         if ($article->featured_image) {
             Storage::disk('public')->delete($article->featured_image);
         }
+        $title = $article->title;
         $article->delete();
+
+        $this->logActivity('delete', "مقاله «{$title}» حذف شد", Article::class, $article->id);
+
         return redirect()->route('admin.articles.index')->with('success', 'مقاله حذف شد!');
     }
 }
